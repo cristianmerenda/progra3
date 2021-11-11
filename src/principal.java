@@ -1,5 +1,4 @@
-package tpo.principal;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -13,7 +12,8 @@ public class principal {
 		int posJugadorGanador = obtenerPosicionJugadorGanador();
 				
 		ResolverProblemaImplementacion resolverProblema = new ResolverProblemaImplementacion();
-		Map<Integer, List<Jugada>> resultado= resolverProblema.resolverJuego(nroJugadoresTotal, posInicial, posJugadorGanador, maxPosASaltar);
+		//Map<Integer, List<Jugada>> resultado= resolverProblema.resolverJuego(nroJugadoresTotal, posInicial, posJugadorGanador, maxPosASaltar);
+		ArrayList<Jugada> resultado= resolverProblema.resolverJuego(nroJugadoresTotal, posInicial, posJugadorGanador, maxPosASaltar);
 		
 		imprimirResultado(resultado);
 		
@@ -53,12 +53,8 @@ public class principal {
 		return Integer.valueOf(entradaTeclado);
 	}
 	
-	private static void imprimirResultado (Map<Integer, List<Jugada>> resultado) {
-		resultado.forEach((k,v) -> {
-				System.out.println("-------------");
-				System.out.println("Solución para " + String.valueOf(k) + " movimientos");
-				v.forEach((c) -> System.out.println(c.getMov() + " " + c.getPos()));
-		});
+	private static void imprimirResultado (ArrayList<Jugada> resultado) {
+		resultado.forEach((c) -> System.out.println(c.getMov() + " " + c.getPos()));
 	}
 	
 }

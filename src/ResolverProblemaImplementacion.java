@@ -1,4 +1,3 @@
-package tpo.principal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,16 +7,23 @@ import java.util.Map;
 
 public class ResolverProblemaImplementacion implements ResolverProblemaInterface{
 	
-	public Map<Integer,List<Jugada>> resolverJuego(int nroJugadoresTotal, int posInicial, int posJugadorGanador, int maxPosASaltar) {
+	public ArrayList<Jugada> resolverJuego(int nroJugadoresTotal, int posInicial, int posJugadorGanador, int maxPosASaltar) {
 		
 		
 
-		Map<Integer, List<Jugada>> resultadoFinal = new HashMap<Integer,List<Jugada>>();
-		Map<Integer, List<Jugada>> solucionFinal = new HashMap<Integer,List<Jugada>>(); 
+		//Map<Integer, List<Jugada>> resultadoFinal = new HashMap<Integer,List<Jugada>>();
+		//Map<Integer, List<Jugada>> solucionFinal = new HashMap<Integer,List<Jugada>>(); 
+		ArrayList<Jugada> solucionFinal = new ArrayList<Jugada>();
 		int[] jugadores = new int[nroJugadoresTotal];
 		
 		for (int i = 1; i <= maxPosASaltar; i += 1) {
-			List<Jugada> solucion = new ArrayList<Jugada>(); 
+			//List<Jugada> solucion = new ArrayList<Jugada>(); 
+		
+			Jugada jugada = new Jugada();
+			jugada.setMov(null);
+			jugada.setPos(i);
+		
+			solucionFinal.add(jugada);
 			int etapa = 1;
 			for (int j = 0 ; j<nroJugadoresTotal; j +=1) {
 				jugadores[j] = j;
@@ -27,14 +33,14 @@ public class ResolverProblemaImplementacion implements ResolverProblemaInterface
 //			System.out.print( String.valueOf(i) + " maxPosASaltar");
 //			System.out.println (" ");
 //			
-			boolean resultado = jugar(jugadores, posInicial, posJugadorGanador, i, etapa, solucion );
+			boolean resultado = jugar(jugadores, posInicial, posJugadorGanador, i, etapa, solucionFinal );
 //			if (resultado) {
 //				solucion.forEach(System.out::println);
 //			}
 //			else {
 //				System.out.println("No hay solución para " + String.valueOf(i));
 //			}
-			solucionFinal.put(i, solucion);
+//			solucionFinal.put(i, solucion);
 			
 
 //			System.out.println("--------------------");
@@ -50,7 +56,7 @@ public class ResolverProblemaImplementacion implements ResolverProblemaInterface
 	}
 	
 	//el etapa me parece que tiene que ser un valor por referencia... analizarlo
-	public boolean jugar (int[] jugadores, int posInicial, int posJugadorGanador, int maxPosASaltar, int etapa, List<Jugada> solucion) {
+	public boolean jugar (int[] jugadores, int posInicial, int posJugadorGanador, int maxPosASaltar, int etapa, ArrayList<Jugada> solucion) {
 		if (jugadores.length == etapa) {
 			if (jugadores[posInicial] == posJugadorGanador) {
 				return true; 
@@ -67,7 +73,13 @@ public class ResolverProblemaImplementacion implements ResolverProblemaInterface
 			if (verificacion == posJugadorGanador) return false; 
 			jugadores[nextPos] = -1;
 			//solucion.add("izquierda " + String.valueOf(verificacion));
-			solucion.add(new Jugada("Izquierda", verificacion));
+			
+			Jugada jugada = new Jugada();
+			jugada.setMov(Movimiento.IZQ);
+			jugada.setPos(verificacion);
+			
+			solucion.add(jugada);
+			//solucion.add(new Jugada("Izquierda", verificacion));
 			boolean resIzq = jugar(jugadores, moverIzq(1, jugadores, nextPos), posJugadorGanador, maxPosASaltar, etapa, solucion);			if (resIzq) {
 				//System.out.println("izquierda " + String.valueOf(verificacion));
 				return true;
@@ -85,7 +97,13 @@ public class ResolverProblemaImplementacion implements ResolverProblemaInterface
 			verificacion = jugadores[nextPos]; 
 			if (verificacion == posJugadorGanador) return false; 
 			jugadores[nextPos] = -1; 
-			solucion.add(new Jugada("Derecha", verificacion));
+			
+			Jugada jugada2 = new Jugada();
+			jugada2.setMov(Movimiento.DER);
+			jugada2.setPos(verificacion);
+			
+			solucion.add(jugada2);
+			//solucion.add(new Jugada("Derecha", verificacion));
 			//solucion.add("derecha " + String.valueOf(verificacion));
 			//boolean resDer = jugar(jugadores, moverDer(1, jugadores, nextPos), posJugadorGanador, maxPosASaltar, etapa, solucion);
 			boolean resDer = jugar(jugadores, moverDer(1, jugadores, nextPos), posJugadorGanador, maxPosASaltar, etapa, solucion);
