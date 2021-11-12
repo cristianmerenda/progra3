@@ -12,7 +12,6 @@ public class principal {
 		int posJugadorGanador = obtenerPosicionJugadorGanador();
 				
 		ResolverProblemaImplementacion resolverProblema = new ResolverProblemaImplementacion();
-		//Map<Integer, List<Jugada>> resultado= resolverProblema.resolverJuego(nroJugadoresTotal, posInicial, posJugadorGanador, maxPosASaltar);
 		ArrayList<Jugada> resultado= resolverProblema.resolverJuego(nroJugadoresTotal, posInicial, posJugadorGanador, maxPosASaltar);
 		
 		imprimirResultado(resultado);

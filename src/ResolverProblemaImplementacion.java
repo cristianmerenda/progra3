@@ -9,16 +9,11 @@ public class ResolverProblemaImplementacion implements ResolverProblemaInterface
 	
 	public ArrayList<Jugada> resolverJuego(int nroJugadoresTotal, int posInicial, int posJugadorGanador, int maxPosASaltar) {
 		
-		
-
-		//Map<Integer, List<Jugada>> resultadoFinal = new HashMap<Integer,List<Jugada>>();
-		//Map<Integer, List<Jugada>> solucionFinal = new HashMap<Integer,List<Jugada>>(); 
 		ArrayList<Jugada> solucionFinal = new ArrayList<Jugada>();
 		int[] jugadores = new int[nroJugadoresTotal];
 		
 		for (int i = 1; i <= maxPosASaltar; i += 1) {
-			//List<Jugada> solucion = new ArrayList<Jugada>(); 
-		
+
 			Jugada jugada = new Jugada();
 			jugada.setMov(null);
 			jugada.setPos(i);
@@ -28,34 +23,12 @@ public class ResolverProblemaImplementacion implements ResolverProblemaInterface
 			for (int j = 0 ; j<nroJugadoresTotal; j +=1) {
 				jugadores[j] = j;
 			}
-	
-//			System.out.print ("Evaluando solución para ");
-//			System.out.print( String.valueOf(i) + " maxPosASaltar");
-//			System.out.println (" ");
 //			
 			boolean resultado = jugar(jugadores, posInicial, posJugadorGanador, i, etapa, solucionFinal );
-//			if (resultado) {
-//				solucion.forEach(System.out::println);
-//			}
-//			else {
-//				System.out.println("No hay solución para " + String.valueOf(i));
-//			}
-//			solucionFinal.put(i, solucion);
-			
-
-//			System.out.println("--------------------");
-//			System.out.println("    ");
 		}
-		
-
-		
-		
-		
-		
 		return solucionFinal;
 	}
 	
-	//el etapa me parece que tiene que ser un valor por referencia... analizarlo
 	public boolean jugar (int[] jugadores, int posInicial, int posJugadorGanador, int maxPosASaltar, int etapa, ArrayList<Jugada> solucion) {
 		if (jugadores.length == etapa) {
 			if (jugadores[posInicial] == posJugadorGanador) {
@@ -79,19 +52,14 @@ public class ResolverProblemaImplementacion implements ResolverProblemaInterface
 			jugada.setPos(verificacion);
 			
 			solucion.add(jugada);
-			//solucion.add(new Jugada("Izquierda", verificacion));
-			boolean resIzq = jugar(jugadores, moverIzq(1, jugadores, nextPos), posJugadorGanador, maxPosASaltar, etapa, solucion);			if (resIzq) {
-				//System.out.println("izquierda " + String.valueOf(verificacion));
+			
+			boolean resIzq = jugar(jugadores, moverIzq(1, jugadores, nextPos), posJugadorGanador, maxPosASaltar, etapa, solucion);		
+			if (resIzq) {
 				return true;
 			} else {
 				jugadores[nextPos] = verificacion; 
-				solucion.remove(solucion.size()-1);
-				
+				solucion.remove(solucion.size()-1);	
 			}
-			//jugadores[nextPos] = verificacion; 
-			//solucion.remove(solucion.size()-1);
-			
-			//etapa -= 1;
 			
 			nextPos = moverDer(maxPosASaltar+1, jugadores, posInicial);
 			verificacion = jugadores[nextPos]; 
@@ -103,12 +71,9 @@ public class ResolverProblemaImplementacion implements ResolverProblemaInterface
 			jugada2.setPos(verificacion);
 			
 			solucion.add(jugada2);
-			//solucion.add(new Jugada("Derecha", verificacion));
-			//solucion.add("derecha " + String.valueOf(verificacion));
-			//boolean resDer = jugar(jugadores, moverDer(1, jugadores, nextPos), posJugadorGanador, maxPosASaltar, etapa, solucion);
+			
 			boolean resDer = jugar(jugadores, moverDer(1, jugadores, nextPos), posJugadorGanador, maxPosASaltar, etapa, solucion);
 			if (resDer) {
-				//System.out.println("derecha " + String.valueOf(verificacion));
 				return true;
 			}
 			else {
